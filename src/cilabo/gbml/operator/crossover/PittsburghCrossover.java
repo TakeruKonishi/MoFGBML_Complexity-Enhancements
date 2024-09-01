@@ -90,7 +90,7 @@ public class PittsburghCrossover <pittsburghSolution extends PittsburghSolution<
 	 * @return
 	 */
 	public List<pittsburghSolution> doCrossover(double probability, pittsburghSolution parent1, pittsburghSolution parent2) {
-		// Cast IntegerSolution to PittsburghSolution
+
 		if(parent1.getNumberOfVariables() < 1) {System.err.println("incorrect input: number Of Rules is less than 1@" + this.getClass().getSimpleName());}
 		if(parent2.getNumberOfVariables() < 1) {System.err.println("incorrect input: number Of Rules is less than 1@" + this.getClass().getSimpleName());}
 		List<pittsburghSolution> offspring = new ArrayList<>();

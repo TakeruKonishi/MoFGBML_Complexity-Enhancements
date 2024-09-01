@@ -118,7 +118,7 @@ public class Input {
 	}
 
 	/**
-	 * ファイル名を指定して複数クラスラベルのデータセットをロード
+	 * ファイル名を指定して単一クラスラベルのデータセットをロード
 	 * @param trainFile 学習用データセットのパス
 	 * @param testFile 評価用データセットのパス
 	 */
@@ -126,9 +126,9 @@ public class Input {
 
 		/* Load Dataset ======================== */
 		if(Objects.isNull(DataSetManager.getInstance().getTrains())) {
-			throw new IllegalArgumentException("argument [trainFile] is null @" + "TrainTestDatasetManager.loadTrainTestFiles()");}
-		if(Objects.isNull(DataSetManager.getInstance().getTrains())) {
-			throw new IllegalArgumentException("argument [testFile] is null @" + "TrainTestDatasetManager.loadTrainTestFiles()");}
+			throw new IllegalArgumentException("argument [trainFile] is null @" + "Input.loadTrainTestFiles()");}
+		if(Objects.isNull(DataSetManager.getInstance().getTests())) {
+			throw new IllegalArgumentException("argument [testFile] is null @" + "Input.loadTrainTestFiles()");}
 
 		DataSet<Pattern_Basic> train = Input.inputDataSet_Basic(trainFile);
 		DataSetManager.getInstance().addTrains(train);
@@ -149,15 +149,52 @@ public class Input {
 	/**
 	 * ファイル名を指定して単一クラスラベルのデータセットをロード
 	 * @param trainFile 学習用データセットのパス
+	 * @param validationFile 検証用データセットのパス
+	 * @param testFile 評価用データセットのパス
+	 */
+	public static void loadTrainValidationTestFiles_Basic(String trainFile, String validationFile, String testFile) {
+
+		/* Load Dataset ======================== */
+		if(Objects.isNull(DataSetManagerValidation.getInstance().getTrains())) {
+			throw new IllegalArgumentException("argument [trainFile] is null @" + "Input.loadTrainValidationTestFiles()");}
+		if(Objects.isNull(DataSetManagerValidation.getInstance().getValidations())) {
+			throw new IllegalArgumentException("argument [validationFile] is null @" + "Input.loadValidationTrainTestFiles()");}
+		if(Objects.isNull(DataSetManagerValidation.getInstance().getTests())) {
+			throw new IllegalArgumentException("argument [testFile] is null @" + "Input.loadTrainValidationTestFiles()");}
+
+		DataSet<Pattern_Basic> train = Input.inputDataSet_Basic(trainFile);
+		DataSetManagerValidation.getInstance().addTrains(train);
+		Consts.DATA_SIZE = train.getDataSize();
+		Consts.ATTRIBUTE_NUMBER = train.getNdim();
+		Consts.CLASS_LABEL_NUMBER = train.getCnum();
+
+		DataSet<Pattern_Basic> validation = Input.inputDataSet_Basic(validationFile);
+		DataSetManagerValidation.getInstance().addValidations(validation);
+
+		DataSet<Pattern_Basic> test = Input.inputDataSet_Basic(testFile);
+		DataSetManagerValidation.getInstance().addTests(test);
+
+		if(Objects.isNull(DataSetManagerValidation.getInstance().getTrains())) {
+			throw new IllegalArgumentException("failed to initialise trains@Input.loadTrainValidationTestFiles()");}
+		else if(Objects.isNull(DataSetManagerValidation.getInstance().getValidations())) {
+			throw new IllegalArgumentException("failed to initialise validations@Input.loadTrainValidationTestFiles()");}
+		else if(Objects.isNull(DataSetManagerValidation.getInstance().getTests())) {
+			throw new IllegalArgumentException("failed to initialise tests@Input.loadTrainValidationTestFiles()");}
+		return;
+	}
+
+	/**
+	 * ファイル名を指定して複数クラスラベルのデータセットをロード
+	 * @param trainFile 学習用データセットのパス
 	 * @param testFile 評価用データセットのパス
 	 */
 	public static void loadTrainTestFiles_MultiClass(String trainFile, String testFile) {
 
 		/* Load Dataset ======================== */
 		if(Objects.isNull(DataSetManager.getInstance().getTrains())) {
-			throw new IllegalArgumentException("argument [trainFile] is null @TrainTestDatasetManager.loadTrainTestFiles()");}
-		if(Objects.isNull(DataSetManager.getInstance().getTrains())) {
-			throw new IllegalArgumentException("argument [testFile] is null @TrainTestDatasetManager.loadTrainTestFiles()");}
+			throw new IllegalArgumentException("argument [trainFile] is null @Input.loadTrainTestFiles()");}
+		if(Objects.isNull(DataSetManager.getInstance().getTests())) {
+			throw new IllegalArgumentException("argument [testFile] is null @Input.loadTrainTestFiles()");}
 
 		DataSet<Pattern_MultiClass> train = Input.inputDataSet_MultiLabel(trainFile);
 		DataSetManager.getInstance().addTrains(train);

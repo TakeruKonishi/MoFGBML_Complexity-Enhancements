@@ -16,8 +16,6 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -147,7 +145,7 @@ public class MoFGBML_Basic_Main {
 		KnowledgeFactory.create2_3_4_5();
 
 		List<Pair<Integer, Integer>> bounds_Michigan = AbstractMichiganSolution.makeBounds();
-		int numberOfObjectives_Michigan = 2;
+		int numberOfObjectives_Michigan = 1;
 		int numberOfConstraints_Michigan = 0;
 
 		int numberOfvariables_Pittsburgh = Consts.INITIATION_RULE_NUM;
@@ -221,10 +219,36 @@ public class MoFGBML_Basic_Main {
 
 		/* Non-dominated solutions in final generation */
 		List<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>> nonDominatedSolutions = algorithm.getResult();
-	    new SolutionListOutput(nonDominatedSolutions)
-        	.setVarFileOutputContext(new DefaultFileOutputContext(Consts.EXPERIMENT_ID_DIR+sep+"VAR-final.csv", ","))
-        	.setFunFileOutputContext(new DefaultFileOutputContext(Consts.EXPERIMENT_ID_DIR+sep+"FUN-final.csv", ","))
-        	.print();
+
+		/* Non-dominated solutions in Archive population */
+		/*とりあえずBasicでアーカイブは実装しないので一旦コメントアウト
+		List<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>> ArchivePopulation = algorithm.getArchivePopulation();
+		algorithm.setPopulation(ArchivePopulation);
+		List<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>> nonDominatedSolutions = algorithm.getResult();*/
+
+		/*バグが起こるので一旦コメントアウト（修正するならJmetal仕様のメソッドを書き換える)*/
+		/*new SolutionListOutput(nonDominatedSolutions)
+    	.setVarFileOutputContext(new DefaultFileOutputContext(Consts.EXPERIMENT_ID_DIR+sep+"VAR-final.csv", ","))
+    	.setFunFileOutputContext(new DefaultFileOutputContext(Consts.EXPERIMENT_ID_DIR+sep+"FUN-final.csv", ","))
+    	.print();*/
+
+	    // Train data
+		/*何らかの不具合があるので一旦コメントアウト
+	    ArrayList<String> strstrain = new ArrayList<>();
+	    String strtrain = "pop,train,NR";
+	    strstrain.add(strtrain);
+
+	    for(int i = 0; i < nonDominatedSolutions.size(); i++) {
+            double errorRatetrain = nonDominatedSolutions.get(i).getObjective(0);
+            double NR = nonDominatedSolutions.get(i).getObjective(1);
+
+	    	strtrain = String.valueOf(i);
+	    	strtrain += "," + errorRatetrain;
+	    	strtrain += "," + NR;
+	    	strstrain.add(strtrain);
+	    }
+	    String fileNametrain = Consts.EXPERIMENT_ID_DIR + sep + "train.csv";
+	    Output.writeln(fileNametrain, strstrain, false);*/
 
 	    // Test data
 	    ArrayList<String> strs = new ArrayList<>();

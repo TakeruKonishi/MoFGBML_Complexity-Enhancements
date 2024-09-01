@@ -62,9 +62,9 @@ public class PittsburghSolutionListOutput{
 	    try {
 	      if (solutionList.size() > 0) {
 	        for (int i = 0; i < solutionList.size(); i++) {
-	          for (int j = 0; j < solutionList.get(i).getNumberOfVariables(); j++) {
+	          //for (int j = 0; j < solutionList.get(i).getNumberOfVariables(); j++) {
 	            bufferedWriter.write("" + solutionList.get(i).toString());
-	          }
+	          //}
 	        }
 	      }
 

@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import cilabo.data.DataSetManager;
+import cilabo.data.DataSetManagerValidation;
 import cilabo.data.pattern.Pattern;
 import cilabo.fuzzy.classifier.Classifier;
 import cilabo.gbml.objectivefunction.pittsburgh.ErrorRate;
@@ -136,7 +136,7 @@ public final class PittsburghSolution_Basic <michiganSolution extends MichiganSo
 			XML_manager.getInstance().addElement(objectives, f2_);
 
 			ErrorRate<PittsburghSolution_Basic<michiganSolution>> errorRate = new ErrorRate<>();
-			double f3 = errorRate.function(this, DataSetManager.getInstance().getTests().get(0));
+			double f3 = errorRate.function(this, DataSetManagerValidation.getInstance().getTests().get(0));
 			Element f3_ = XML_manager.getInstance().createElement(XML_TagName.objective, String.valueOf(f3));
 			f3_.setAttribute(XML_TagName.id.toString(), String.valueOf(OBJECTIVES_FOR_PITTSBURGH.ErrorRateDtst.toInt()));
 			f3_.setAttribute(XML_TagName.objectiveName.toString(), OBJECTIVES_FOR_PITTSBURGH.ErrorRateDtst.toString());

@@ -11,7 +11,7 @@ import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.w3c.dom.Element;
 
 import cilabo.data.DataSet;
-import cilabo.data.DataSetManager;
+import cilabo.data.DataSetManagerValidation;
 import cilabo.data.pattern.Pattern;
 import cilabo.fuzzy.rule.Rule;
 import cilabo.fuzzy.rule.Rule.RuleBuilder;
@@ -99,7 +99,7 @@ public final class MichiganSolution_Basic<RuleObject extends Rule<?, ?, ?, ?, ?,
 		this.createRule(pattern);
 
 		//生成不可ルールの場合はランダムなパターンをから再生成
-		DataSet<?> train = DataSetManager.getInstance().getTrains().get(0);
+		DataSet<?> train = DataSetManagerValidation.getInstance().getTrains().get(0);
 		while(this.rule.isRejectedClassLabel()) {
 			int index = Random.getInstance().getGEN().nextInt(train.getDataSize());
 			this.createRule(train.getPattern(index));
