@@ -1,4 +1,4 @@
-# MoFGBML
+# MoFGBML_CE
 **依存関係について**  
 jMetalなどのライブラリを使用しているため，ソースコードだけでは，依存関係でエラーが起こるかもしれません．  
 今回は，Mavenというビルドツールを使っているので，依存関係のエラーを解決する手間が省けていると思います．
@@ -14,7 +14,7 @@ jMetalなどのライブラリを使用しているため，ソースコード�
 **その他**  
 適宜データセットを追加，constsを変更して使用してください．
 
-# MoFGBML
+# MoFGBML_CE
 **About dependencies**
 Since we are using libraries such as jMetal, dependency errors may occur in the source code alone.  
 In this case, we use a build tool called Maven, which saves us the trouble of resolving dependency errors.
