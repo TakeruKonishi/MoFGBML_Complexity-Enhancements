@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     requests = [{"trial" : f"{i}_{j}",
                 "dataset" : Dataset, 
-                "jarFile" : "target\MoFGBML-23.0.0-SNAPSHOT-TSZ0.jar", 
+                "jarFile" : "target\MoFGBML-23.0.0-SNAPSHOT-TSv0.jar", 
                 "algroithmID" : f"TS\{Dataset}{generation}",
                 "parallelCores" : "6",
                 "experimentID" : f"trial{i}{j}",
