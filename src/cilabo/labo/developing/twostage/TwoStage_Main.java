@@ -20,6 +20,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -48,6 +49,7 @@ import cilabo.gbml.solution.michiganSolution.MichiganSolution.MichiganSolutionBu
 import cilabo.gbml.solution.michiganSolution.impl.MichiganSolution_Basic;
 import cilabo.gbml.solution.pittsburghSolution.impl.PittsburghSolution_Basic;
 import cilabo.main.Consts;
+import cilabo.util.fileoutput.PittsburghSolutionListOutputX;
 import cilabo.utility.Output;
 import cilabo.utility.Parallel;
 //import xml.XML_manager;
@@ -342,6 +344,11 @@ public class TwoStage_Main {
         //統合後のリストから非劣解を抽出し，最終的な個体群とする
         List<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>> nonDominatedSolutionsARC = SolutionListUtils.getNonDominatedSolutions(mergedList);
 
+		String outputRootDir = Consts.EXPERIMENT_ID_DIR;
+		new PittsburghSolutionListOutputX(nonDominatedSolutionsARC)
+        .setVarFileOutputContext(new DefaultFileOutputContext(outputRootDir + sep + String.format("VARARC-%d.csv", Consts.TERMINATE_EVALUATION), ","))
+        .print();
+
         //バグ含むのでコメントアウト（修正するならJmetal仕様のメソッドを書き換える）
 		/*new SolutionListOutput(nonDominatedSolutions)
     	.setVarFileOutputContext(new DefaultFileOutputContext(Consts.EXPERIMENT_ID_DIR+sep+"VAR-final.csv", ","))
@@ -613,7 +620,7 @@ public class TwoStage_Main {
 				= new MichiganCrossover<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>, MichiganSolution_Basic<Rule_Basic>>(Consts.MICHIGAN_CROSS_RT, train);
 		/* Pittsburgh operation */
 		CrossoverOperator<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>> pittsburghX
-				= new PittsburghCrossoverComplexOriented<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>, MichiganSolution_Basic<Rule_Basic>>(Consts.PITTSBURGH_CROSS_RT);
+				= new PittsburghCrossover<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>, MichiganSolution_Basic<Rule_Basic>>(Consts.PITTSBURGH_CROSS_RT);
 		/* Hybrid-style crossover */
 		CrossoverOperator<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>> crossover
 				= new HybridGBMLcrossover<PittsburghSolution_Basic<MichiganSolution_Basic<Rule_Basic>>, MichiganSolution_Basic<Rule_Basic>>(crossoverProbability, Consts.MICHIGAN_OPE_RT, michiganX, pittsburghX);
