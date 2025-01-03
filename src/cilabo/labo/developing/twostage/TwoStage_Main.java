@@ -347,6 +347,7 @@ public class TwoStage_Main {
 		String outputRootDir = Consts.EXPERIMENT_ID_DIR;
 		new PittsburghSolutionListOutputX(nonDominatedSolutionsARC)
         .setVarFileOutputContext(new DefaultFileOutputContext(outputRootDir + sep + String.format("VARARC-%d.csv", Consts.TERMINATE_EVALUATION), ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext(outputRootDir + sep + String.format("FUNARC-%d.csv", Consts.TERMINATE_EVALUATION), ","))
         .print();
 
         //バグ含むのでコメントアウト（修正するならJmetal仕様のメソッドを書き換える）
